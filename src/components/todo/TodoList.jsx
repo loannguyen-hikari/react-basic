@@ -7,7 +7,7 @@ const {todoList} = props
      <div>
       {todoList.map((todo) => {
           return(
-          <div className="todo-item">
+          <div className="todo-item" key={todo.id}>
             <div>{todo.name}</div>
             <button>Delete</button>
           </div>)
