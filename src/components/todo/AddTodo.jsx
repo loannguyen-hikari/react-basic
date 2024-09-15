@@ -10,11 +10,12 @@ const AddTodo = (props) => {
 
   const handleOnClick = () => {
     addNewTodo(valueInput)
+    setValueInput("")
   }
 
   return (
     <div className="add-todo">
-      <input type="text" onChange={(event) => handleOnChange(event.target.value)}/>
+      <input type="text" onChange={(event) => handleOnChange(event.target.value)} value={valueInput}/>
       <button className="add-todo-btn" onClick={handleOnClick}>Add</button>
       <div>My input is {valueInput}</div>
     </div>
