@@ -27,12 +27,15 @@ const App = () => {
     <AddTodo
       addNewTodo = {addNewTodo}
     />
+    {todoList.length > 0 ? 
     <TodoList 
       todoList = {todoList}
     />
+    :
     <div className="todo-image">
       <img className="logo" src={Logo} alt="logo" />
     </div>
+    }
    </div>
   )
 }
