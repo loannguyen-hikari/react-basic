@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { Input, notification, Button, Modal } from "antd";
 import { createUserAPI } from "../../services/api.service";
 
-const UserForm = () => {
+const UserForm = (props) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { loadUser } = props;
 
   const handleSubmitBtn = async () => {
     const res = await createUserAPI(fullName, email, password, phoneNumber);
@@ -17,13 +18,22 @@ const UserForm = () => {
         message: "Create user",
         description: "Created user successfully",
       });
-      setIsModalOpen(false)
+      resetAndCloseModal();
+      await loadUser();
     } else {
       notification.error({
         message: "Error create user",
         description: JSON.stringify(res.message),
       });
     }
+  };
+
+  const resetAndCloseModal = () => {
+    setIsModalOpen(false);
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhoneNumber("");
   };
 
   return (
@@ -37,12 +47,8 @@ const UserForm = () => {
       <Modal
         title="Create User"
         open={isModalOpen}
-        onOk={() => {
-          handleSubmitBtn();
-        }}
-        onCancel={() => {
-          setIsModalOpen(false);
-        }}
+        onOk={() => handleSubmitBtn()}
+        onCancel={() => resetAndCloseModal()}
         maskClosable={false}
         okText={"Create"}
       >
