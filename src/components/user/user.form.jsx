@@ -6,13 +6,13 @@ const UserForm = (props) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [phone, setphone] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { loadUser } = props;
 
   const handleSubmitBtn = async () => {
-    const res = await createUserAPI(fullName, email, password, phoneNumber);
+    const res = await createUserAPI(fullName, email, password, phone);
     if (res.data) {
       notification.success({
         message: "Create user",
@@ -33,7 +33,7 @@ const UserForm = (props) => {
     setFullName("");
     setEmail("");
     setPassword("");
-    setPhoneNumber("");
+    setphone("");
   };
 
   return (
@@ -77,8 +77,8 @@ const UserForm = (props) => {
           <div>
             <span>Phone number</span>
             <Input
-              value={phoneNumber}
-              onChange={(event) => setPhoneNumber(event.target.value)}
+              value={phone}
+              onChange={(event) => setphone(event.target.value)}
             />
           </div>
         </div>
