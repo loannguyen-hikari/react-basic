@@ -6,6 +6,7 @@ const ViewUserDetail = (props) => {
 
   return (
     <Drawer
+      width={"40vw"}
       title="User Detail"
       onClose={() => setIsDetailOpen(false)}
       open={isDetailOpen}
@@ -19,6 +20,35 @@ const ViewUserDetail = (props) => {
           <p>Phone: {dataDetail.phone}</p>
           <br />
           <p>Email: {dataDetail.email}</p>
+          <br />
+          <p>Avatar:</p>
+          <div>
+            <img
+              style={{ width: "100px", height: "100px" }}
+              src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
+                dataDetail.avatar
+              }`}
+              alt=""
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="btnUpload"
+              style={{
+                display: "block",
+                width: "fit-content",
+                marginTop: "15px",
+                padding: "5px 10px",
+                background: "blue",
+                borderRadius: "5px",
+                color: "white",
+                cursor: "pointer",
+              }}
+            >
+              Upload Avatar
+            </label>
+            <input type="file" hidden id="btnUpload" />
+          </div>
         </>
       ) : (
         <>
