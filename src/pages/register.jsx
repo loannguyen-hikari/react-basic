@@ -1,9 +1,30 @@
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form, notification } from "antd";
+import { registerUserAPI } from "../services/api.service";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log(values);
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    const res = await registerUserAPI(
+      values.fullName,
+      values.email,
+      values.password,
+      values.phone
+    );
+    if (res.data) {
+      notification.success({
+        message: "Register user",
+        description: "Registered user successfully",
+      });
+      navigate("/login");
+    } else {
+      notification.error({
+        message: "Register user error",
+        description: JSON.stringify(res.message),
+      });
+    }
   };
 
   return (
@@ -61,7 +82,8 @@ const RegisterPage = () => {
           rules={[
             {
               required: true,
-              message: "Please input your phone number!",
+              pattern: new RegExp(/\d+/g),
+              message: "Wrong format!",
             },
           ]}
         >
