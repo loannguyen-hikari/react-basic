@@ -1,10 +1,37 @@
-import { Input, Button, Form, notification, Col, Row, Divider } from "antd";
+import {
+  Input,
+  Button,
+  Form,
+  notification,
+  Col,
+  Row,
+  Divider,
+  message,
+  Descriptions,
+} from "antd";
 import { Link } from "react-router-dom";
+import { loginUserAPI } from "../services/api.service";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [form] = Form.useForm();
-  const onFinish = (values) => {
-    console.log(values);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const onFinish = async (values) => {
+    setLoading(true);
+    const res = await loginUserAPI(values.email, values.password);
+    if (res.data) {
+      message.success("Logined successfully");
+      navigate("/");
+    } else {
+      notification.error({
+        message: "Error login",
+        description: JSON.stringify(res.message),
+      });
+    }
+    setLoading(false);
   };
   return (
     <Row justify={"center"} style={{ marginTop: "40px" }}>
@@ -49,7 +76,11 @@ const LoginPage = () => {
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <Button type="primary" onClick={() => form.submit()}>
+              <Button
+                loading={loading}
+                type="primary"
+                onClick={() => form.submit()}
+              >
                 Login
               </Button>
               <Link to={"/"}>Go to homepage →</Link>
