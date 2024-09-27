@@ -27,7 +27,7 @@ const LoginPage = () => {
     if (res.data) {
       message.success("Logined successfully");
       localStorage.setItem("access_token", res.data.access_token);
-      setUser(res.data.user)
+      setUser(res.data.user);
       navigate("/");
     } else {
       notification.error({
@@ -76,7 +76,13 @@ const LoginPage = () => {
                 },
               ]}
             >
-              <Input.Password />
+              <Input.Password
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    form.submit();
+                  }
+                }}
+              />
             </Form.Item>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
