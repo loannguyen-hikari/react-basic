@@ -11,10 +11,12 @@ import {
 } from "antd";
 import { Link } from "react-router-dom";
 import { loginUserAPI } from "../services/api.service";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../components/context/auth.context";
 
 const LoginPage = () => {
+  const { setUser } = useContext(AuthContext);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -24,6 +26,8 @@ const LoginPage = () => {
     const res = await loginUserAPI(values.email, values.password);
     if (res.data) {
       message.success("Logined successfully");
+      localStorage.setItem("access_token", res.data.access_token);
+      setUser(res.data.user)
       navigate("/");
     } else {
       notification.error({
