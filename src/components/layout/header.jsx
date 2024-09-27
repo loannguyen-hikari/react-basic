@@ -5,7 +5,8 @@ import {
   HomeOutlined,
   UsergroupAddOutlined,
   BookOutlined,
-  SettingOutlined,
+  LoginOutlined,
+  AliwangwangOutlined,
 } from "@ant-design/icons";
 import { AuthContext } from "../context/auth.context";
 
@@ -29,15 +30,31 @@ const Header = () => {
       key: "books",
       icon: <BookOutlined />,
     },
-    {
-      label: "Setting",
-      key: "setting",
-      icon: <SettingOutlined />,
-      children: [
-        { label: <Link to={"/login"}>Login</Link>, key: "login" },
-        { label: <Link to={"/register"}>Register</Link>, key: "register" },
-      ],
-    },
+    ...(!user.id
+      ? [
+          {
+            label: <Link to={"/login"}>Login</Link>,
+            key: "login",
+            icon: <LoginOutlined />,
+          },
+        ]
+      : []),
+
+    ...(user.id
+      ? [
+          {
+            label: `Welcome ${user.fullName}`,
+            key: "setting",
+            icon: <AliwangwangOutlined></AliwangwangOutlined>,
+            children: [
+              {
+                label: "Log out",
+                key: "logout",
+              },
+            ],
+          },
+        ]
+      : []),
   ];
 
   const [current, setCurrent] = useState("");
