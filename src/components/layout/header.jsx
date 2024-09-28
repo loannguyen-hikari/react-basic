@@ -13,7 +13,7 @@ import { logOutAPI } from "../../services/api.service";
 
 const Header = () => {
   const { user, setUser } = useContext(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   console.log(user);
   const handleLogOut = async () => {
     const res = await logOutAPI();
@@ -31,7 +31,7 @@ const Header = () => {
       message.success("Logged out successfully");
 
       //redirect to home
-      navigate("/")
+      navigate("/");
     }
   };
 
